@@ -1,1 +1,1 @@
-# -speech-deepfake-detection
+# speech-deepfake-detection
