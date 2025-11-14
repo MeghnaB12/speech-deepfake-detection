@@ -48,13 +48,11 @@ The core of this solution is to treat audio classification as an image classific
 pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyter
 ```
 
-2. Dataset
+### 2. Dataset
 
-This model was trained on the Multilingual Indian Speech Data dataset as part of a university challenge. Due to privacy and access restrictions, the dataset is not publicly available and is not included in this repository.
+This model was trained on the Multilingual Indian Speech Data dataset as part of a university challenge. Due to privacy and access restrictions, the dataset is not publicly available and is not included in this repository. Therefore, the train.py and inference.py scripts cannot be run without access to the original data.
 
-Therefore, the train.py and inference.py scripts cannot be run without access to the original data.
-
-3. Notebook Review
+### 3. Notebook Review
 
 The indic_deepfake.ipynb notebook contains the full, end-to-end code for the methodology, including:
 
