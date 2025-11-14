@@ -50,18 +50,20 @@ pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyte
 
 ### 2. Dataset
 
-This model was trained on the Multilingual Indian Speech Data dataset as part of a university challenge. Due to privacy and access restrictions, the dataset is not publicly available and is not included in this repository. Therefore, the train.py and inference.py scripts cannot be run without access to the original data.
+This model was trained on the Multilingual Indian Speech Data dataset as part of a university challenge. Due to privacy and access restrictions, the dataset is not publicly available and is not included in this repository.
+
+Therefore, the notebook cannot be run to train the model or perform inference without access to the original data.
 
 ### 3. Notebook Review
 
 The indic_deepfake.ipynb notebook contains the full, end-to-end code for the methodology, including:
 
-Data preprocessing functions
+* Data preprocessing functions
 
-The FakeVoiceDataset class
+* The FakeVoiceDataset class
 
-Model definition (Vision Transformer)
+* Model definition (Vision Transformer)
 
-The complete training and validation loop
+* The complete training and validation loop
 
 This notebook can be reviewed to understand the complete logic, but it cannot be executed without the original dataset.
