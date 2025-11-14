@@ -38,32 +38,32 @@ The core of this solution is to treat audio classification as an image classific
 * **Metrics:** `scikit-learn` (for ROC-AUC score)
 * **Utilities:** `tqdm` (for progress bars)
 
-## 🏃 How to Run
+## 🏃 Running the Project
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone [YOUR_GITHUB_REPO_URL]
-    cd [YOUR_PROJECT_DIRECTORY]
-    ```
+### 1. Dependencies
 
-2.  **Install Dependencies:**
-    (It is recommended to use a virtual environment)
-    ```bash
-    pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyter
-    ```
+(It is recommended to use a virtual environment)
 
-3.  **Get the Data:**
-    * Download the [Multilingual Indian Speech Data](https://www.kaggle.com/competitions/multilingual-indian-speech-data) from Kaggle.
-    * Place the `audio/` directory and the `metadata.csv` files in a folder structure that matches the paths in the notebook (e.g., `/kaggle/input/multilingual-indian-speech-data/`).
+```bash
+pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyter
+```
 
-4.  **Run the Notebook:**
-    * Open and run the `indic_deepfake.ipynb` notebook in Jupyter Lab or Google Colab.
-    * The notebook contains the full, end-to-end pipeline:
-        1.  Loading and preprocessing data
-        2.  Defining the `Dataset` and `DataLoaders`
-        3.  Training and validating the ViT model
-        4.  Saving the model weights (`fake_voice_vit.pth`)
-        5.  Running inference on the test set
-        6.  Generating the final `submission.csv`
+2. Dataset
 
-## 📁 File Structure
+This model was trained on the Multilingual Indian Speech Data dataset as part of a university challenge. Due to privacy and access restrictions, the dataset is not publicly available and is not included in this repository.
+
+Therefore, the train.py and inference.py scripts cannot be run without access to the original data.
+
+3. Notebook Review
+
+The indic_deepfake.ipynb notebook contains the full, end-to-end code for the methodology, including:
+
+Data preprocessing functions
+
+The FakeVoiceDataset class
+
+Model definition (Vision Transformer)
+
+The complete training and validation loop
+
+This notebook can be reviewed to understand the complete logic, but it cannot be executed without the original dataset.
