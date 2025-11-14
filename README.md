@@ -1,92 +1,69 @@
-IndicTTS Deepfake Detection Challenge
-This project contains the complete code for a deep learning model designed to detect AI-generated (Text-to-Speech) audio. The model was developed for a challenge involving 16 different Indian languages and achieved near-perfect classification.
+# IndicTTS Deepfake Detection Challenge
 
-🚀 Key Result
-The final model achieved a 0.99998 ROC-AUC on the challenge's test set, demonstrating an extremely high-performing and robust ability to distinguish between real human speech and fake, AI-generated speech.
+This project contains the complete code for a deep learning model designed to detect AI-generated (Text-to-Speech) audio. The model was developed for a challenge involving 16 different Indian languages and achieved **near-perfect classification**.
 
-📈 Methodology
+## 🚀 Key Result
+
+The final model achieved a **0.99998 ROC-AUC** on the challenge's test set, demonstrating an extremely high-performing and robust ability to distinguish between real human speech and fake, AI-generated speech.
+
+## 📈 Methodology
+
 The core of this solution is to treat audio classification as an image classification problem. Instead of feeding raw audio to a model, we convert audio files into their visual representations (spectrograms) and use a powerful, pre-trained Vision Transformer (ViT) to classify them.
 
-Audio Preprocessing (Feature Extraction):
+1.  **Audio Preprocessing (Feature Extraction):**
+    * Each `.wav` file is loaded using `librosa`.
+    * It is then converted into a **Mel Spectrogram**, which is a visual representation of the spectrum of frequencies in the audio.
+    * The spectrogram is converted to the decibel scale (`librosa.power_to_db`).
 
-Each .wav file is loaded using librosa.
+2.  **Image-like Normalization:**
+    * The decibel-scaled spectrogram is normalized to a [0, 1] range, similar to pixels in an image.
+    * Because the pre-trained model expects a 3-channel (RGB) image, the single-channel spectrogram is stacked 3 times (`np.stack([mel_spec, mel_spec, mel_spec], axis=0)`).
 
-It is then converted into a Mel Spectrogram, which is a visual representation of the spectrum of frequencies in the audio.
+3.  **The Model (Vision Transformer):**
+    * The model used is a `vit_base_patch16_224` (Vision Transformer) pre-trained on the ImageNet dataset, loaded via the `timm` library.
+    * The spectrogram "images" are resized to 224x224 to match the ViT's expected input.
+    * The model's final classification head is replaced with one that outputs 2 classes: (0: Real, 1: Fake/TTS).
 
-The spectrogram is converted to the decibel scale (librosa.power_to_db).
+4.  **Training & Inference:**
+    * The model is fine-tuned on the training set using PyTorch.
+    * The notebook includes a full inference pipeline that processes the `test.csv`, generates predictions, and saves the final `submission.csv` file.
 
-Image-like Normalization:
+## 🛠️ Tech Stack
 
-The decibel-scaled spectrogram is normalized to a [0, 1] range, similar to pixels in an image.
+* **Core:** Python
+* **Deep Learning:** PyTorch
+* **Model Architecture:** `timm` (PyTorch Image Models) for Vision Transformer
+* **Audio Processing:** `librosa` (for loading audio and creating Mel spectrograms)
+* **Data Handling:** `pandas`, `NumPy`
+* **Metrics:** `scikit-learn` (for ROC-AUC score)
+* **Utilities:** `tqdm` (for progress bars)
 
-Because the pre-trained model expects a 3-channel (RGB) image, the single-channel spectrogram is stacked 3 times (np.stack([mel_spec, mel_spec, mel_spec], axis=0)).
+## 🏃 How to Run
 
-The Model (Vision Transformer):
+1.  **Clone the Repository:**
+    ```bash
+    git clone [YOUR_GITHUB_REPO_URL]
+    cd [YOUR_PROJECT_DIRECTORY]
+    ```
 
-The model used is a vit_base_patch16_224 (Vision Transformer) pre-trained on the ImageNet dataset, loaded via the timm library.
+2.  **Install Dependencies:**
+    (It is recommended to use a virtual environment)
+    ```bash
+    pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyter
+    ```
 
-The spectrogram "images" are resized to 224x224 to match the ViT's expected input.
+3.  **Get the Data:**
+    * Download the [Multilingual Indian Speech Data](https://www.kaggle.com/competitions/multilingual-indian-speech-data) from Kaggle.
+    * Place the `audio/` directory and the `metadata.csv` files in a folder structure that matches the paths in the notebook (e.g., `/kaggle/input/multilingual-indian-speech-data/`).
 
-The model's final classification head is replaced with one that outputs 2 classes: (0: Real, 1: Fake/TTS).
+4.  **Run the Notebook:**
+    * Open and run the `indic_deepfake.ipynb` notebook in Jupyter Lab or Google Colab.
+    * The notebook contains the full, end-to-end pipeline:
+        1.  Loading and preprocessing data
+        2.  Defining the `Dataset` and `DataLoaders`
+        3.  Training and validating the ViT model
+        4.  Saving the model weights (`fake_voice_vit.pth`)
+        5.  Running inference on the test set
+        6.  Generating the final `submission.csv`
 
-Training & Inference:
-
-The model is fine-tuned on the training set using PyTorch.
-
-The notebook includes a full inference pipeline that processes the test.csv, generates predictions, and saves the final submission.csv file.
-
-🛠️ Tech Stack
-Core: Python
-
-Deep Learning: PyTorch
-
-Model Architecture: timm (PyTorch Image Models) for Vision Transformer
-
-Audio Processing: librosa (for loading audio and creating Mel spectrograms)
-
-Data Handling: pandas, NumPy
-
-Metrics: scikit-learn (for ROC-AUC score)
-
-Utilities: tqdm (for progress bars)
-
-🏃 How to Run
-Clone the Repository:
-
-Bash
-git clone [YOUR_GITHUB_REPO_URL]
-cd [YOUR_PROJECT_DIRECTORY]
-Install Dependencies: (It is recommended to use a virtual environment)
-
-Bash
-pip install torch torchvision timm librosa pandas numpy scikit-learn tqdm jupyter
-Get the Data:
-
-Download the Multilingual Indian Speech Data from Kaggle.
-
-Place the audio/ directory and the metadata.csv files in a folder structure that matches the paths in the notebook (e.g., /kaggle/input/multilingual-indian-speech-data/).
-
-Run the Notebook:
-
-Open and run the indic_deepfake.ipynb notebook in Jupyter Lab or Google Colab.
-
-The notebook contains the full, end-to-end pipeline:
-
-Loading and preprocessing data
-
-Defining the Dataset and DataLoaders
-
-Training and validating the ViT model
-
-Saving the model weights (fake_voice_vit.pth)
-
-Running inference on the test set
-
-Generating the final submission.csv
-
-📁 File Structure
-.
-├── indic_deepfake.ipynb      # Main Jupyter Notebook with all code.
-├── fake_voice_vit.pth        # Trained model weights (generated by the notebook).
-├── submission.csv            # Final predictions (generated by the notebook).
-└── README.md                 # This file.
+## 📁 File Structure
