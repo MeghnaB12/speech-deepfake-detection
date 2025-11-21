@@ -2,6 +2,7 @@
 
 This project contains the complete code for a deep learning model designed to detect AI-generated (Text-to-Speech) audio. The model was developed for a challenge involving 16 different Indian languages and achieved **near-perfect classification**.
 
+----
 ## 🚀 Key Result
 
 The final model achieved a **0.99998 ROC-AUC** on the challenge's test set, demonstrating an extremely high-performing and robust ability to distinguish between real human speech and fake, AI-generated speech.
